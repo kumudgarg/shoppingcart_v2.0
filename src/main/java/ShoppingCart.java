@@ -7,6 +7,8 @@ public class ShoppingCart {
 
     private List<Product> products;
 
+    private double totalPrice = 0.0;
+
     public ShoppingCart() {
         this.flag = false;
         this.products = new ArrayList<>();
@@ -21,9 +23,16 @@ public class ShoppingCart {
     }
 
     public double getTotalPrice(int quantity) throws ShoppingCartException {
-        if(flag)
-            return products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();
+        if(flag) {
+            totalPrice = this.totalPrice + products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();
+            products.clear();
+            return totalPrice;
+        }
         throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
+    }
+
+    public double salesTaxHandler(double totalPrice){
+        return totalPrice + 0.18;
     }
 
 
