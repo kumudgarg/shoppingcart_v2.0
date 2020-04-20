@@ -1,7 +1,7 @@
 public class ShoppingCartException extends Exception {
 
     public enum ExceptionType{
-       EMPTY_PRODUCTS
+       EMPTY_PRODUCTS, NULL_PRODUCT_TYPE
     }
 
     public ShoppingCartException.ExceptionType type;

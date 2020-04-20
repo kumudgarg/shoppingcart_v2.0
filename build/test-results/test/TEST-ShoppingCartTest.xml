@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ShoppingCartTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-20T05:00:27" hostname="kumuds-MacBook-Pro.local" time="0.005">
+<testsuite name="ShoppingCartTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-20T05:17:22" hostname="kumuds-MacBook-Pro.local" time="0.007">
   <properties/>
-  <testcase name="shouldThrowCustomExceptionWhenAListOfProductEmpty" classname="ShoppingCartTest" time="0.005"/>
-  <system-out><![CDATA[aaaaaaaaa
+  <testcase name="shouldThrowCustomExceptionWhenNullProductTypeAdded" classname="ShoppingCartTest" time="0.007"/>
+  <system-out><![CDATA[aaaaaaa
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

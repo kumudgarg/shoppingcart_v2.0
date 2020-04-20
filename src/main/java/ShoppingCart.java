@@ -12,7 +12,10 @@ public class ShoppingCart {
         this.products = new ArrayList<>();
     }
 
-    public boolean getAddedToCart(Product product) {
+    public boolean getAddedToCart(Product product) throws ShoppingCartException {
+        if(product.getProductType() == null){
+            throw new ShoppingCartException("null product type", ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE);
+        }
         products.add(product);
         return flag = true;
     }

@@ -4,7 +4,7 @@ import org.junit.Test;
 public class ShoppingCartTest {
 
     @Test
-    public void shouldReturnTrueWhenASingleProductAdded() {
+    public void shouldReturnTrueWhenASingleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE,0.99);
         boolean flag = shoppingCart.getAddedToCart(apple);
@@ -40,10 +40,25 @@ public class ShoppingCartTest {
             ShoppingCart shoppingCart = new ShoppingCart();
             Product apple = new Product(ProductType.APPLE, 0.99);
             double totalPrice = shoppingCart.getTotalPrice(quantity);
-            Assert.assertEquals(4.95, totalPrice, 0.0);
         } catch (ShoppingCartException ex) {
             Assert.assertEquals(ShoppingCartException.ExceptionType.EMPTY_PRODUCTS, ex.type);
         }
     }
+
+    @Test
+    public void shouldThrowCustomExceptionWhenNullProductTypeAdded() throws ShoppingCartException {
+        try {
+            int quantity = 5;
+            ShoppingCart shoppingCart = new ShoppingCart();
+            Product apple = new Product(null, 0.99);
+            shoppingCart.getAddedToCart(apple);
+        }
+        catch (ShoppingCartException ex){
+            Assert.assertEquals(ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE, ex.type);
+
+        }
+
+    }
+
 
 }
