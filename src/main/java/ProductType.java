@@ -1,3 +1,3 @@
 public enum ProductType {
-    APPLE
+    MASK, APPLE
 }
