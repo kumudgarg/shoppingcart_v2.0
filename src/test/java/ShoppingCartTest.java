@@ -60,5 +60,20 @@ public class ShoppingCartTest {
 
     }
 
+    @Test
+    public void shouldReturnTotalPriceWithSalesTaxWhenMultipleProductAdded() throws ShoppingCartException {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        Product apple = new Product(ProductType.APPLE, 0.99);
+        shoppingCart.getAddedToCart(apple);
+        shoppingCart.getTotalPrice(3);
+        shoppingCart.getAddedToCart(apple);
+        shoppingCart.getTotalPrice(1);
+        Product mask = new Product(ProductType.MASK, 1.99);
+        shoppingCart.getAddedToCart(mask);
+        double totalPrice = shoppingCart.getTotalPrice(3);
+        Assert.assertEquals(9.12, totalPrice, 0.0);
+    }
+
+
 
 }
