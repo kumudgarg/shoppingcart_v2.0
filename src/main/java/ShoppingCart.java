@@ -17,10 +17,10 @@ public class ShoppingCart {
         return flag = true;
     }
 
-    public double getTotalPrice(int quantity) {
+    public double getTotalPrice(int quantity) throws ShoppingCartException {
         if(flag)
             return products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();
-        return 0.0;
+        throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
     }
 
 

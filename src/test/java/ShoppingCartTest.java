@@ -12,7 +12,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceWhenASingleProductAdded() {
+    public void shouldReturnTotalPriceWhenASingleProductAdded() throws ShoppingCartException {
         int quantity = 5;
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
@@ -22,7 +22,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceWhenMultipleProductAdded() {
+    public void shouldReturnTotalPriceWhenMultipleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
         shoppingCart.getAddedToCart(apple);
