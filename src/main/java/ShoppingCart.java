@@ -1,15 +1,25 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShoppingCart {
 
-    private boolean flag = false;
+    private boolean flag;
 
+    private List<Product> products;
+
+    public ShoppingCart() {
+        this.flag = false;
+        this.products = new ArrayList<>();
+    }
 
     public boolean getAddedToCart(Product product) {
+        products.add(product);
         return flag = true;
     }
 
     public double getTotalPrice(int quantity) {
         if(flag)
-            return quantity * 0.99;
+            return products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();;
         return 0.0;
     }
 }
