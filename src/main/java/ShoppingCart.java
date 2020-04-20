@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,19 @@ public class ShoppingCart {
 
     private List<Product> products;
 
+    private SalesTax salesTax;
+
+    private DecimalFormat df;
+
+    private final String PATTERN = "#.##";
+
     private double totalPrice = 0.0;
 
     public ShoppingCart() {
         this.flag = false;
         this.products = new ArrayList<>();
+        this.salesTax = new SalesTax();
+        this.df = new DecimalFormat(this.PATTERN);
     }
 
     public boolean getAddedToCart(Product product) throws ShoppingCartException {
@@ -31,8 +40,10 @@ public class ShoppingCart {
         throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
     }
 
-    public double salesTaxHandler(double totalPrice){
-        return totalPrice + 0.18;
+    public String getTotalPriceWithsalesTax(double totalPrice){
+        double grandTotal = totalPrice + salesTax.getSalesTax(totalPrice);
+        String format = df.format(grandTotal);
+        return format;
     }
 
 

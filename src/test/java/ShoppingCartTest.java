@@ -71,8 +71,8 @@ public class ShoppingCartTest {
         Product mask = new Product(ProductType.MASK, 1.99);
         shoppingCart.getAddedToCart(mask);
         double totalPrice = shoppingCart.getTotalPrice(3);
-        double grandTotal = shoppingCart.salesTaxHandler(totalPrice);
-        Assert.assertEquals(9.12, grandTotal, 0.0);
+        String totalPriceWithsalesTax = shoppingCart.getTotalPriceWithsalesTax(totalPrice);
+        Assert.assertEquals("9.12", totalPriceWithsalesTax);
     }
 
 
