@@ -19,7 +19,9 @@ public class ShoppingCart {
 
     public double getTotalPrice(int quantity) {
         if(flag)
-            return products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();;
+            return products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();
         return 0.0;
     }
+
+
 }

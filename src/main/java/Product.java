@@ -2,10 +2,11 @@ public class Product {
 
     private ProductType productType;
 
-    private final double productPrice = 0.99;
+    private  double productPrice;
 
-    public Product(ProductType productType) {
+    public Product(ProductType productType, double productPrice) {
         this.productType = productType;
+        this.productPrice = productPrice;
     }
 
     public ProductType getProductType() {

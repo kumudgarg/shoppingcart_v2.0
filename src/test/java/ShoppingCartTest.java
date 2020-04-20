@@ -6,7 +6,7 @@ public class ShoppingCartTest {
     @Test
     public void shouldReturnTrueWhenASingleProductAdded() {
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product apple = new Product(ProductType.APPLE);
+        Product apple = new Product(ProductType.APPLE,0.99);
         boolean flag = shoppingCart.getAddedToCart(apple);
         Assert.assertEquals(true, flag);
     }
@@ -15,7 +15,7 @@ public class ShoppingCartTest {
     public void shouldReturnTotalPriceWhenASingleProductAdded() {
         int quantity = 5;
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product apple = new Product(ProductType.APPLE);
+        Product apple = new Product(ProductType.APPLE, 0.99);
         boolean flag = shoppingCart.getAddedToCart(apple);
         double totalPrice = shoppingCart.getTotalPrice(quantity);
         Assert.assertEquals(4.95, totalPrice, 0.0);
@@ -24,10 +24,10 @@ public class ShoppingCartTest {
     @Test
     public void shouldReturnTotalPriceWhenMultipleProductAdded() {
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product apple = new Product(ProductType.APPLE);
+        Product apple = new Product(ProductType.APPLE, 0.99);
         shoppingCart.getAddedToCart(apple);
         shoppingCart.getTotalPrice(3);
-        Product mask = new Product(ProductType.MASK);
+        Product mask = new Product(ProductType.MASK, 1.99);
         shoppingCart.getAddedToCart(mask);
         double totalPrice = shoppingCart.getTotalPrice(3);
         Assert.assertEquals(8.94, totalPrice, 0.0);
