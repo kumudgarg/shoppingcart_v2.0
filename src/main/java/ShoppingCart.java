@@ -1,12 +1,14 @@
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ShoppingCart {
 
     private boolean flag;
 
-    private List<Product> products;
+     List<Product> products;
 
     private SalesTax salesTax;
 
@@ -16,6 +18,10 @@ public class ShoppingCart {
 
     private double totalPrice = 0.0;
 
+    private int limit;
+
+    private int quantity;
+
     public ShoppingCart() {
         this.flag = false;
         this.products = new ArrayList<>();
@@ -23,15 +29,16 @@ public class ShoppingCart {
         this.df = new DecimalFormat(this.PATTERN);
     }
 
-    public boolean getAddedToCart(Product product) throws ShoppingCartException {
+    public void addToCart(Product product, int quantity) throws ShoppingCartException {
         if(product.getProductType() == null){
             throw new ShoppingCartException("null product type", ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE);
         }
-        products.add(product);
-        return flag = true;
+        for (int i = 0; i < quantity; i++)
+            products.add(product);
     }
 
-    public double getTotalPrice(int quantity) throws ShoppingCartException {
+
+    public double getTotalPrice() throws ShoppingCartException {
         if(flag) {
             totalPrice = this.totalPrice + products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();
             products.clear();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ShoppingCartTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-20T06:26:17" hostname="kumuds-MacBook-Pro.local" time="0.022">
+<testsuite name="ShoppingCartTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-21T05:29:09" hostname="kumuds-MacBook-Pro.local" time="0.003">
   <properties/>
-  <testcase name="shouldReturnTotalPriceWithSalesTaxWhenMultipleProductAdded" classname="ShoppingCartTest" time="0.022"/>
+  <testcase name="shouldReturnTrueWhenASingleProductAdded" classname="ShoppingCartTest" time="0.003"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
