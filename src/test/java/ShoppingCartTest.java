@@ -71,28 +71,9 @@ public class ShoppingCartTest {
         shoppingCart.addToCart(apple,1);
         Product mask = new Product(ProductType.MASK, 1.99);
         shoppingCart.addToCart(mask, 3);
+        shoppingCart.getTotalPrice();
         double totalPriceWithsalesTax = shoppingCart.getTotalPriceWithSalesTax();
         Assert.assertEquals(9.12, totalPriceWithsalesTax, 0.0);
     }
 }
 
-   /* @Test
-    public void shouldReturnTotalPriceWithSalesTaxWhenMultipleProductAddedIntoCart() throws ShoppingCartException {
-        List<Product> products = new ArrayList<>();
-        ShoppingCart shoppingCart = new ShoppingCart();
-        Product apple = new Product(ProductType.APPLE, 0.99);
-        shoppingCart.addToCart(apple, 2);
-        int size = shoppingCart.products.size();
-        Assert.assertEquals(2, size);
-
-        Assert.assertEquals(true, cart);
-        shoppingCart.getTotalPrice(2);
-        shoppingCart.getAddedToCart(apple);
-        shoppingCart.getTotalPrice(1);
-        Product mask = new Product(ProductType.MASK, 1.99);
-        shoppingCart.getAddedToCart(mask);
-        double totalPrice = shoppingCart.getTotalPrice(3);
-        String totalPriceWithsalesTax = shoppingCart.getTotalPriceWithsalesTax(totalPrice);
-        Assert.assertEquals("9.12", totalPriceWithsalesTax);
-    }
-*/

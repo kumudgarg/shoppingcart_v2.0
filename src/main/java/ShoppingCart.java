@@ -39,7 +39,6 @@ public class ShoppingCart {
     }
 
     public double getTotalPriceWithSalesTax() throws ShoppingCartException {
-        double totalPrice = getTotalPrice();
         double grandTotal = this.totalPrice + salesTax.getSalesTax(totalPrice);
         double precisedTotal = Double.parseDouble(String.format("%.2f", grandTotal));;
         return precisedTotal;
