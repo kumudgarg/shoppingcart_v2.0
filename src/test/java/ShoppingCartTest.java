@@ -40,7 +40,6 @@ public class ShoppingCartTest {
     @Test
     public void shouldThrowCustomExceptionWhenAListOfProductEmpty() throws ShoppingCartException {
         try {
-
             ShoppingCart shoppingCart = new ShoppingCart();
             Product apple = new Product(ProductType.APPLE, 0.99);
             double totalPrice = shoppingCart.getTotalPrice();
@@ -48,17 +47,16 @@ public class ShoppingCartTest {
             Assert.assertEquals(ShoppingCartException.ExceptionType.EMPTY_PRODUCTS, ex.type);
         }
     }
-}
 
-    /*@Test
+
+    @Test
     public void shouldThrowCustomExceptionWhenNullProductTypeAdded() throws ShoppingCartException {
         try {
             int quantity = 5;
             ShoppingCart shoppingCart = new ShoppingCart();
             Product apple = new Product(null, 0.99);
-            shoppingCart.getAddedToCart(apple);
-        }
-        catch (ShoppingCartException ex){
+            shoppingCart.addToCart(apple, 3);
+        } catch (ShoppingCartException ex) {
             Assert.assertEquals(ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE, ex.type);
 
         }
@@ -69,17 +67,16 @@ public class ShoppingCartTest {
     public void shouldReturnTotalPriceWithSalesTaxWhenMultipleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
-        shoppingCart.getAddedToCart(apple);
-        shoppingCart.getTotalPrice(2);
-        shoppingCart.getAddedToCart(apple);
-        shoppingCart.getTotalPrice(1);
+        shoppingCart.addToCart(apple, 2);
+        shoppingCart.addToCart(apple,1);
         Product mask = new Product(ProductType.MASK, 1.99);
-        shoppingCart.getAddedToCart(mask);
-        double totalPrice = shoppingCart.getTotalPrice(3);
-        String totalPriceWithsalesTax = shoppingCart.getTotalPriceWithsalesTax(totalPrice);
-        Assert.assertEquals("9.12", totalPriceWithsalesTax);
+        shoppingCart.addToCart(mask, 3);
+        double totalPriceWithsalesTax = shoppingCart.getTotalPriceWithSalesTax();
+        Assert.assertEquals(9.12, totalPriceWithsalesTax, 0.0);
     }
-    @Test
+}
+
+   /* @Test
     public void shouldReturnTotalPriceWithSalesTaxWhenMultipleProductAddedIntoCart() throws ShoppingCartException {
         List<Product> products = new ArrayList<>();
         ShoppingCart shoppingCart = new ShoppingCart();
@@ -99,5 +96,3 @@ public class ShoppingCartTest {
         Assert.assertEquals("9.12", totalPriceWithsalesTax);
     }
 */
-
-
