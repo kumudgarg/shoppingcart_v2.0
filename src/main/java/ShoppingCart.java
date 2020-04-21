@@ -30,6 +30,7 @@ public class ShoppingCart {
     }
 
     public void addToCart(Product product, int quantity) throws ShoppingCartException {
+        this.quantity = quantity;
         if(product.getProductType() == null){
             throw new ShoppingCartException("null product type", ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE);
         }
@@ -39,19 +40,18 @@ public class ShoppingCart {
 
 
     public double getTotalPrice() throws ShoppingCartException {
-        if(flag) {
-            totalPrice = this.totalPrice + products.stream().mapToDouble(product -> product.getProductPrice() * quantity).sum();
-            products.clear();
-            return totalPrice;
-        }
-        throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
+
+        totalPrice = this.totalPrice + products.stream().mapToDouble(product -> product.getProductPrice()).sum();
+        return totalPrice;
+
+//        throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
+//        }
+
+//    public String getTotalPriceWithsalesTax(double totalPrice){
+//        double grandTotal = totalPrice + salesTax.getSalesTax(totalPrice);
+//        String format = df.format(grandTotal);
+//        return format;
+//    }
+
     }
-
-    public String getTotalPriceWithsalesTax(double totalPrice){
-        double grandTotal = totalPrice + salesTax.getSalesTax(totalPrice);
-        String format = df.format(grandTotal);
-        return format;
-    }
-
-
 }

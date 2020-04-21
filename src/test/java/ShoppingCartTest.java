@@ -9,22 +9,22 @@ public class ShoppingCartTest {
     @Test
     public void shouldReturnTrueWhenASingleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product apple = new Product(ProductType.APPLE,0.99);
+        Product apple = new Product(ProductType.APPLE, 0.99);
         shoppingCart.addToCart(apple, 2);
         int size = shoppingCart.products.size();
         Assert.assertEquals(2, size);
     }
 
-//    @Test
-//    public void shouldReturnTotalPriceWhenASingleProductAdded() throws ShoppingCartException {
-//        int quantity = 5;
-//        ShoppingCart shoppingCart = new ShoppingCart();
-//        Product apple = new Product(ProductType.APPLE, 0.99);
-//        boolean flag = shoppingCart.getAddedToCart(apple);
-//        double totalPrice = shoppingCart.getTotalPrice(quantity);
-//        Assert.assertEquals(4.95, totalPrice, 0.0);
-//    }
-//
+    @Test
+    public void shouldReturnTotalPriceWhenASingleProductAdded() throws ShoppingCartException {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        Product apple = new Product(ProductType.APPLE, 0.99);
+        shoppingCart.addToCart(apple, 5);
+        double totalPrice = shoppingCart.getTotalPrice();
+        Assert.assertEquals(4.95, totalPrice, 0.0);
+    }
+}
+
 //    @Test
 //    public void shouldReturnTotalPriceWhenMultipleProductAdded() throws ShoppingCartException {
 //        ShoppingCart shoppingCart = new ShoppingCart();
@@ -86,8 +86,8 @@ public class ShoppingCartTest {
 //        shoppingCart.addToCart(apple, 2);
 //        int size = shoppingCart.products.size();
 //        Assert.assertEquals(2, size);
-
-        //Assert.assertEquals(true, cart);
+//
+//        Assert.assertEquals(true, cart);
 //        shoppingCart.getTotalPrice(2);
 //        shoppingCart.getAddedToCart(apple);
 //        shoppingCart.getTotalPrice(1);
@@ -96,7 +96,7 @@ public class ShoppingCartTest {
 //        double totalPrice = shoppingCart.getTotalPrice(3);
 //        String totalPriceWithsalesTax = shoppingCart.getTotalPriceWithsalesTax(totalPrice);
 //        Assert.assertEquals("9.12", totalPriceWithsalesTax);
-    }
+//    }
 
 
 
