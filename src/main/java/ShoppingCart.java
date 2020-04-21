@@ -40,11 +40,14 @@ public class ShoppingCart {
 
 
     public double getTotalPrice() throws ShoppingCartException {
+        if(products.isEmpty()){
+            throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
+        }
 
         totalPrice = this.totalPrice + products.stream().mapToDouble(product -> product.getProductPrice()).sum();
         return totalPrice;
 
-//        throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
+//
 //        }
 
 //    public String getTotalPriceWithsalesTax(double totalPrice){
