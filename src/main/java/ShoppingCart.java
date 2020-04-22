@@ -11,21 +11,25 @@ public class ShoppingCart {
 
     private SalesTax salesTax;
 
-    private BigDecimal bigDecimal;
+    private Product product;
 
     private double totalPrice = 0.0;
 
+    private Offer offer;
 
     public ShoppingCart() {
         this.products = new ArrayList<>();
         this.salesTax = new SalesTax();
+        this.offer = new Offer();
     }
 
     public void addToCart(Product product, int quantity) throws ShoppingCartException {
         if (product.getProductType() == null) {
             throw new ShoppingCartException("null product type", ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE);
         }
-        for (int i = 0; i < quantity; i++)
+        this.product = product;
+        int revisedQuantity = product.getOffer().getQuantity(quantity);
+        for (int i = 0; i < revisedQuantity; i++)
             products.add(product);
     }
 
@@ -34,14 +38,26 @@ public class ShoppingCart {
         if (products.isEmpty()) {
             throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
         }
-        totalPrice = this.totalPrice + products.stream().mapToDouble(product -> product.getProductPrice()).sum();
+        totalPrice = products.stream().mapToDouble(product -> product.getProductPrice()).sum();
         return totalPrice;
     }
 
     public double getTotalPriceWithSalesTax() throws ShoppingCartException {
+        totalPrice = totalPrice - getDiscount();
         double grandTotal = this.totalPrice + salesTax.getSalesTax(totalPrice);
-        double precisedTotal = Double.parseDouble(String.format("%.2f", grandTotal));;
-        return precisedTotal;
+        double roundedTotal = Double.parseDouble(String.format("%.2f", grandTotal));
+        return roundedTotal;
+    }
+
+
+    public double getDiscount(){
+        double discount = product.getOffer().getFreeProduct() * product.getProductPrice();
+        return discount;
+    }
+
+    public double getGrandTotal() throws ShoppingCartException {
+        double grandTotal = getTotalPriceWithSalesTax() - getDiscount();
+        return grandTotal;
     }
 
 

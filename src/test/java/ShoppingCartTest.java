@@ -11,7 +11,7 @@ public class ShoppingCartTest {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
         shoppingCart.addToCart(apple, 2);
-        int size = shoppingCart.products.size();
+        int size = shoppingCart.products.size(); //design damage
         Assert.assertEquals(2, size);
     }
 
@@ -21,6 +21,7 @@ public class ShoppingCartTest {
         Product apple = new Product(ProductType.APPLE, 0.99);
         shoppingCart.addToCart(apple, 5);
         double totalPrice = shoppingCart.getTotalPrice();
+         totalPrice = shoppingCart.getTotalPrice();
         Assert.assertEquals(4.95, totalPrice, 0.0);
     }
 
@@ -79,13 +80,17 @@ public class ShoppingCartTest {
     @Test
     public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
+        Offer offer = new Offer(OfferType.WITH_OFFER);
         Product apple = new Product(ProductType.APPLE, 0.99);
+        apple.setOffer(offer);
         shoppingCart.addToCart(apple, 5);
+        Offer noOffer = new Offer(OfferType.NO_OFFER);
         Product mask = new Product(ProductType.MASK, 1.99);
+        mask.setOffer(noOffer);
         shoppingCart.addToCart(mask, 3);
         shoppingCart.getTotalPrice();
-        double totalPriceWithsalesTax = shoppingCart.getTotalPriceWithSalesTax();
-        Assert.assertEquals(8.11, totalPriceWithsalesTax, 0.0);
+        double grandTotal = shoppingCart.getTotalPriceWithSalesTax();
+        Assert.assertEquals(10.12, grandTotal, 0.0);
     }
 }
 

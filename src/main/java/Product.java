@@ -4,9 +4,19 @@ public class Product {
 
     private  double productPrice;
 
+    private Offer offer;
+
     public Product(ProductType productType, double productPrice) {
         this.productType = productType;
         this.productPrice = productPrice;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 
     public ProductType getProductType() {
