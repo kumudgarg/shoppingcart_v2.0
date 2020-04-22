@@ -1,9 +1,6 @@
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 public class ShoppingCart {
 
@@ -13,14 +10,13 @@ public class ShoppingCart {
 
     private Product product;
 
-    private double totalPrice = 0.0;
+    private double discount;
 
-    private Offer offer;
+    private double totalPrice = 0.0;
 
     public ShoppingCart() {
         this.products = new ArrayList<>();
         this.salesTax = new SalesTax();
-        this.offer = new Offer();
     }
 
     public void addToCart(Product product, int quantity) throws ShoppingCartException {
@@ -28,11 +24,11 @@ public class ShoppingCart {
             throw new ShoppingCartException("null product type", ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE);
         }
         this.product = product;
-        int revisedQuantity = product.getOffer().getQuantity(quantity);
+        int revisedQuantity = product.getOffer().getQuantity(quantity); //law of demeter
+        getDiscount();
         for (int i = 0; i < revisedQuantity; i++)
             products.add(product);
     }
-
 
     public double getTotalPrice() throws ShoppingCartException {
         if (products.isEmpty()) {
@@ -43,23 +39,17 @@ public class ShoppingCart {
     }
 
     public double getTotalPriceWithSalesTax() throws ShoppingCartException {
-        totalPrice = totalPrice - getDiscount();
+        totalPrice = totalPrice - discount;
         double grandTotal = this.totalPrice + salesTax.getSalesTax(totalPrice);
         double roundedTotal = Double.parseDouble(String.format("%.2f", grandTotal));
         return roundedTotal;
     }
 
-
-    public double getDiscount(){
-        double discount = product.getOffer().getFreeProduct() * product.getProductPrice();
-        return discount;
+    public double getDiscount() {
+        int freeProduct = product.getOffer().getFreeProduct();
+        discount = discount + freeProduct * product.getProductPrice();
+        return this.discount;
     }
-
-    public double getGrandTotal() throws ShoppingCartException {
-        double grandTotal = getTotalPriceWithSalesTax() - getDiscount();
-        return grandTotal;
-    }
-
 
 }
 

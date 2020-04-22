@@ -1,45 +1,54 @@
 public class Offer {
 
-
-
     private int actualQuantity;
 
-    private int count;
+    private int buyProduct;
 
-    private int buyProduct = 2;
+    private int getProduct;
 
-    private int getProduct = 3;
-
-    private int freeProduct = getProduct - buyProduct;
-
-   private OfferType offerType;
+    private OfferType offerType;
 
     public Offer() {
+    }
+
+    public Offer( OfferType offerType, int buyProduct, int getProduct) {
+        this.buyProduct = buyProduct;
+        this.getProduct = getProduct;
+        this.offerType = offerType;
     }
 
     public Offer(OfferType offerType) {
         this.offerType = offerType;
     }
 
-    public int getQuantity(int quantity) {
-        actualQuantity = quantity;
-        if(offerType.equals(OfferType.WITH_OFFER)){
-            int remainder = quantity % 2;
-            quantity += remainder;
-            return quantity;
-        }
-        else if(offerType.equals(OfferType.NO_OFFER))
-        return quantity;
-        return 0;
+    private int getBaseFreeProduct(){
+        if(this.getProduct > this.buyProduct)
+            return getProduct - buyProduct;
+        return getProduct;
     }
 
-    public int getFreeProduct(){
-            int quotient = actualQuantity / 2;
-            while (quotient >= 1){
-                quotient = quotient / 2;
-                count++;
-            }
-            return count * freeProduct;
+
+    public int getQuantity(int quantity) {
+        actualQuantity = quantity;
+        if (offerType.equals(OfferType.WITH_OFFER)) {
+            int remainder = quantity % buyProduct;
+            int freeProduct = getFreeProduct();
+
+            quantity = quantity + freeProduct - remainder;
+            return quantity;
+        }
+            return quantity;
+
+    }
+
+    public int getFreeProduct() {
+        if(offerType.equals(OfferType.WITH_OFFER)) {
+            int baseFreeProduct = getBaseFreeProduct();
+            int quotient = actualQuantity / buyProduct;
+            int freeProduct = quotient * baseFreeProduct;
+            return freeProduct;
+        }
+        return 0;
     }
 
 }

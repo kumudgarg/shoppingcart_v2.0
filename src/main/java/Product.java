@@ -27,7 +27,4 @@ public class Product {
         return productPrice ;
     }
 
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
-    }
 }
