@@ -1,17 +1,12 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ShoppingCartTest {
 
     @Test
     public void shouldReturnTrueWhenASingleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
-        Offer offer = new Offer(OfferType.NO_OFFER, 2, 3);
-        apple.setOffer(offer);
         shoppingCart.addToCart(apple, 2);
         int size = shoppingCart.getCartSize(); //design damage
         Assert.assertEquals(2, size);
@@ -21,11 +16,8 @@ public class ShoppingCartTest {
     public void shouldReturnTotalPriceWhenASingleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
-        Offer offer = new Offer(OfferType.NO_OFFER, 2, 3);
-        apple.setOffer(offer);
         shoppingCart.addToCart(apple, 5);
         double totalPrice = shoppingCart.getTotalPrice();
-        totalPrice = shoppingCart.getTotalPrice();
         Assert.assertEquals(4.95, totalPrice, 0.0);
     }
 
@@ -34,11 +26,8 @@ public class ShoppingCartTest {
     public void shouldReturnTotalPriceWhenMultipleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
-        Offer offer = new Offer(OfferType.NO_OFFER, 2, 3);
-        apple.setOffer(offer);
         shoppingCart.addToCart(apple, 3);
         Product mask = new Product(ProductType.MASK, 1.99);
-        mask.setOffer(offer);
         shoppingCart.addToCart(mask, 3);
         double totalPrice = shoppingCart.getTotalPrice();
         Assert.assertEquals(8.94, totalPrice, 0.0);
@@ -52,7 +41,7 @@ public class ShoppingCartTest {
             Product apple = new Product(ProductType.APPLE, 0.99);
             double totalPrice = shoppingCart.getTotalPrice();
         } catch (ShoppingCartException ex) {
-            Assert.assertEquals(ShoppingCartException.ExceptionType.EMPTY_PRODUCTS, ex.type);
+            Assert.assertEquals("Empty Product List", ex.getMessage());
         }
     }
 
@@ -60,31 +49,27 @@ public class ShoppingCartTest {
     @Test
     public void shouldThrowCustomExceptionWhenNullProductTypeAdded() throws ShoppingCartException {
         try {
-            int quantity = 5;
             ShoppingCart shoppingCart = new ShoppingCart();
             Product apple = new Product(null, 0.99);
             shoppingCart.addToCart(apple, 3);
         } catch (ShoppingCartException ex) {
-            Assert.assertEquals(ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE, ex.type);
+            Assert.assertEquals("null product type", ex.getMessage());
+
 
         }
-
+//TODO: What will the test fail?
     }
 
     @Test
     public void shouldReturnTotalPriceToHandleSalesTaxWhenMultipleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
-        Offer offer = new Offer(OfferType.NO_OFFER, 2, 3);
-        apple.setOffer(offer);
         shoppingCart.addToCart(apple, 2);
         shoppingCart.addToCart(apple, 1);
         Product mask = new Product(ProductType.MASK, 1.99);
-        Offer offer1 = new Offer(OfferType.NO_OFFER);
-        mask.setOffer(offer1);
         shoppingCart.addToCart(mask, 3);
         shoppingCart.getTotalPrice();
-        double totalPriceWithsalesTax = shoppingCart.getTotalPriceWithSalesTax();
+        double totalPriceWithsalesTax = shoppingCart.getGrandTotalPriceWithSalesTax();
         Assert.assertEquals(9.12, totalPriceWithsalesTax, 0.0);
     }
 
@@ -92,15 +77,13 @@ public class ShoppingCartTest {
     public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
-        Offer offer = new Offer(OfferType.WITH_OFFER, 2, 3);
+        Offer offer = new Offer(2, 3);
         apple.setOffer(offer);
         shoppingCart.addToCart(apple, 5);
         Product mask = new Product(ProductType.MASK, 1.99);
-        Offer offer1 = new Offer(OfferType.NO_OFFER);
-        mask.setOffer(offer1);
         shoppingCart.addToCart(mask, 3);
         shoppingCart.getTotalPrice();
-        double grandTotal = shoppingCart.getTotalPriceWithSalesTax();
+        double grandTotal = shoppingCart.getGrandTotalPriceWithSalesTax();
         Assert.assertEquals(10.13, grandTotal, 0.0);
     }
 
@@ -108,17 +91,30 @@ public class ShoppingCartTest {
     public void shouldReturnTotalPriceToSupportMoreOfferWhenMultipleProductAdded() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
         Product apple = new Product(ProductType.APPLE, 0.99);
-        Offer offer = new Offer(OfferType.WITH_OFFER, 2, 3);
+        Offer offer = new Offer(2, 3);
         apple.setOffer(offer);
         shoppingCart.addToCart(apple, 10);
         Product mask = new Product(ProductType.MASK, 1.99);
-        Offer offer1 = new Offer(OfferType.NO_OFFER);
-        mask.setOffer(offer1);
         shoppingCart.addToCart(mask, 3);
         shoppingCart.getTotalPrice();
-        double grandTotal = shoppingCart.getTotalPriceWithSalesTax();
+        double grandTotal = shoppingCart.getGrandTotalPriceWithSalesTax();
         Assert.assertEquals(13.16, grandTotal, 0.0);
     }
+
+    @Test
+    public void shouldReturnTotalPriceToSupportMoreOfferForCartProducts() throws ShoppingCartException {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        Product apple = new Product(ProductType.APPLE, 0.99);
+        Offer offer = new Offer(2, 3);
+        apple.setOffer(offer);
+        shoppingCart.addToCart(apple, 10);
+        Product mask = new Product(ProductType.MASK, 1.99);
+        shoppingCart.addToCart(mask, 3);
+        shoppingCart.getTotalPrice();
+        double grandTotal = shoppingCart.getGrandTotalPriceWithSalesTax();
+        Assert.assertEquals(11.54, grandTotal, 0.0);
+    }
+
 
 
 }

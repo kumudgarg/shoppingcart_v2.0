@@ -1,54 +1,49 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ShoppingCart {
 
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
-    private Product product;
-
-    private double discount;
+    private double discount = 0.0;
 
     private double totalPrice = 0.0;
 
-    public ShoppingCart() {
-        this.products = new ArrayList<>();
-    }
-
     public void addToCart(Product product, int quantity) throws ShoppingCartException {
         if (product.getProductType() == null) {
-            throw new ShoppingCartException("null product type", ShoppingCartException.ExceptionType.NULL_PRODUCT_TYPE);
+            throw new ShoppingCartException("null product type");
         }
-        this.product = product;
-        int revisedQuantity = product.getOffer().getQuantity(quantity); //law of demeter
-        getDiscount();
+
+        int revisedQuantity = quantity;
+        if (product.getOffer() != null) {
+            revisedQuantity = product.getOffer().getQuantity(quantity); //law of demeter
+            updateDiscount(product);
+        }
+
         for (int i = 0; i < revisedQuantity; i++)
             products.add(product);
     }
 
     public double getTotalPrice() throws ShoppingCartException {
         if (products.isEmpty()) {
-            throw new ShoppingCartException("Empty Product List", ShoppingCartException.ExceptionType.EMPTY_PRODUCTS);
+            throw new ShoppingCartException("Empty Product List");
         }
         totalPrice = products.stream().mapToDouble(product -> product.getProductPrice()).sum();
         return totalPrice;
     }
 
-    public double getTotalPriceWithSalesTax() throws ShoppingCartException {
-        totalPrice = totalPrice - discount;
+    public double getGrandTotalPriceWithSalesTax() {
+        totalPrice = totalPrice - (discount + CartOffer.getDiscountByCartOffer(totalPrice));
         double grandTotal = this.totalPrice + SalesTax.getSalesTax(totalPrice);
-        double roundedTotal = Double.parseDouble(String.format("%.2f", grandTotal));
-        return roundedTotal;
+        return Double.parseDouble(String.format("%.2f", grandTotal));
     }
 
-    public double getDiscount() {
+    public void updateDiscount(Product product) {
         int freeProduct = product.getOffer().getFreeProduct();
-        discount = discount + freeProduct * product.getProductPrice();
-        return this.discount;
+        discount += freeProduct * product.getProductPrice();
     }
 
-    public int getCartSize(){
+    public int getCartSize() {
         return products.size();
     }
 
