@@ -34,31 +34,21 @@ public class ShoppingCartTest {
     }
 
 
-    @Test
+    @Test(expected = ShoppingCartException.class)
     public void shouldThrowCustomExceptionWhenAListOfProductEmpty() throws ShoppingCartException {
-        try {
             ShoppingCart shoppingCart = new ShoppingCart();
             Product apple = new Product(ProductType.APPLE, 0.99);
             double totalPrice = shoppingCart.getTotalPrice();
-        } catch (ShoppingCartException ex) {
-            Assert.assertEquals("Empty Product List", ex.getMessage());
-        }
     }
 
 
-    @Test
+    @Test(expected = ShoppingCartException.class)
     public void shouldThrowCustomExceptionWhenNullProductTypeAdded() throws ShoppingCartException {
-        try {
             ShoppingCart shoppingCart = new ShoppingCart();
             Product apple = new Product(null, 0.99);
             shoppingCart.addToCart(apple, 3);
-        } catch (ShoppingCartException ex) {
-            Assert.assertEquals("null product type", ex.getMessage());
-
-
-        }
-//TODO: What will the test fail?
     }
+
 
     @Test
     public void shouldReturnTotalPriceToHandleSalesTaxWhenMultipleProductAdded() throws ShoppingCartException {
@@ -115,8 +105,5 @@ public class ShoppingCartTest {
         double grandTotal = shoppingCart.getGrandTotalPriceWithSalesTax();
         Assert.assertEquals(11.54, grandTotal, 0.0);
     }
-
-
-
 }
 
