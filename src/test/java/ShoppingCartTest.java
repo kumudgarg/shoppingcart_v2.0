@@ -104,5 +104,22 @@ public class ShoppingCartTest {
         Assert.assertEquals(10.13, grandTotal, 0.0);
     }
 
+    @Test
+    public void shouldReturnTotalPriceToSupportMoreOfferWhenMultipleProductAdded() throws ShoppingCartException {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        Product apple = new Product(ProductType.APPLE, 0.99);
+        Offer offer = new Offer(OfferType.WITH_OFFER, 2, 3);
+        apple.setOffer(offer);
+        shoppingCart.addToCart(apple, 10);
+        Product mask = new Product(ProductType.MASK, 1.99);
+        Offer offer1 = new Offer(OfferType.NO_OFFER);
+        mask.setOffer(offer1);
+        shoppingCart.addToCart(mask, 3);
+        shoppingCart.getTotalPrice();
+        double grandTotal = shoppingCart.getTotalPriceWithSalesTax();
+        Assert.assertEquals(12.9, grandTotal, 0.0);
+    }
+
+
 }
 

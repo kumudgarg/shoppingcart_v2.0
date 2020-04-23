@@ -33,7 +33,6 @@ public class Offer {
         if (offerType.equals(OfferType.WITH_OFFER)) {
             int remainder = quantity % buyProduct;
             int freeProduct = getFreeProduct();
-
             quantity = quantity + freeProduct - remainder;
             return quantity;
         }
