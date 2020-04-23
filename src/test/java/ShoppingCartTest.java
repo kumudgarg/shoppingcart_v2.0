@@ -13,7 +13,7 @@ public class ShoppingCartTest {
         Offer offer = new Offer(OfferType.NO_OFFER, 2, 3);
         apple.setOffer(offer);
         shoppingCart.addToCart(apple, 2);
-        int size = shoppingCart.products.size(); //design damage
+        int size = shoppingCart.getCartSize(); //design damage
         Assert.assertEquals(2, size);
     }
 

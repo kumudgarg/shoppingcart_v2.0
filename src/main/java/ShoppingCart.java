@@ -4,9 +4,7 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    List<Product> products;
-
-    private SalesTax salesTax;
+    private List<Product> products;
 
     private Product product;
 
@@ -16,7 +14,6 @@ public class ShoppingCart {
 
     public ShoppingCart() {
         this.products = new ArrayList<>();
-        this.salesTax = new SalesTax();
     }
 
     public void addToCart(Product product, int quantity) throws ShoppingCartException {
@@ -40,7 +37,7 @@ public class ShoppingCart {
 
     public double getTotalPriceWithSalesTax() throws ShoppingCartException {
         totalPrice = totalPrice - discount;
-        double grandTotal = this.totalPrice + salesTax.getSalesTax(totalPrice);
+        double grandTotal = this.totalPrice + SalesTax.getSalesTax(totalPrice);
         double roundedTotal = Double.parseDouble(String.format("%.2f", grandTotal));
         return roundedTotal;
     }
@@ -49,6 +46,10 @@ public class ShoppingCart {
         int freeProduct = product.getOffer().getFreeProduct();
         discount = discount + freeProduct * product.getProductPrice();
         return this.discount;
+    }
+
+    public int getCartSize(){
+        return products.size();
     }
 
 }
