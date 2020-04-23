@@ -104,6 +104,7 @@ public class ShoppingCartTest {
     @Test
     public void shouldReturnTotalPriceToSupportMoreOfferForCartProducts() throws ShoppingCartException {
         ShoppingCart shoppingCart = new ShoppingCart();
+        CartOffer.setDiscountRateAndleastLimitProduct(10, 10);
         Product apple = new Product(ProductType.APPLE, 0.99);
         Offer offer = new Offer(2, 3);
         apple.setOffer(offer);

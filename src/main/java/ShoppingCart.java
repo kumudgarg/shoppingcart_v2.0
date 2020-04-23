@@ -33,7 +33,7 @@ public class ShoppingCart {
     }
 
     public double getGrandTotalPriceWithSalesTax() {
-        totalPrice = totalPrice - (discount + CartOffer.getDiscountByCartOffer(totalPrice));
+        totalPrice = totalPrice - (discount + CartOffer.getDiscountByCartOffer(products,totalPrice));
         double grandTotal = this.totalPrice + SalesTax.getSalesTax(totalPrice);
         return Double.parseDouble(String.format("%.2f", grandTotal));
     }
