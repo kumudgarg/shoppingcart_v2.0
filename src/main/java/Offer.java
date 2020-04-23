@@ -31,10 +31,10 @@ public class Offer {
     public int getQuantity(int quantity) {
         actualQuantity = quantity;
         if (offerType.equals(OfferType.WITH_OFFER)) {
-            int remainder = quantity % buyProduct;
-            int freeProduct = getFreeProduct();
-            quantity = quantity + freeProduct - remainder;
-            return quantity;
+            int remainder = quantity % getProduct;
+                if(remainder == buyProduct)
+                    return quantity + 1;
+                return quantity;
         }
             return quantity;
 
@@ -43,9 +43,11 @@ public class Offer {
     public int getFreeProduct() {
         if(offerType.equals(OfferType.WITH_OFFER)) {
             int baseFreeProduct = getBaseFreeProduct();
-            int quotient = actualQuantity / buyProduct;
-            int freeProduct = quotient * baseFreeProduct;
-            return freeProduct;
+            int quotient = actualQuantity / getProduct;
+            int remainder = actualQuantity % getProduct;
+            if(remainder == buyProduct)
+                return (quotient + 1) * baseFreeProduct;
+            return quotient * baseFreeProduct;
         }
         return 0;
     }

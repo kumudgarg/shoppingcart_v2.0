@@ -117,7 +117,7 @@ public class ShoppingCartTest {
         shoppingCart.addToCart(mask, 3);
         shoppingCart.getTotalPrice();
         double grandTotal = shoppingCart.getTotalPriceWithSalesTax();
-        Assert.assertEquals(12.9, grandTotal, 0.0);
+        Assert.assertEquals(13.16, grandTotal, 0.0);
     }
 
 
