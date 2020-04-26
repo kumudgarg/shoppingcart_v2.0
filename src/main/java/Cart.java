@@ -16,7 +16,10 @@ public class Cart {
         this.cartOffer = cartOffer;
     }
 
-    public void addProduct(Product product, int quantity) {
+    public void addProduct(Product product, int quantity) throws NullProductTypeException {
+        if(product == null){
+            throw new NullProductTypeException("product should not be null");
+        }
         CartItem existingCartItem = findCartItem(product.getName());
         if (existingCartItem != null) {
             existingCartItem.increaseQuantity(quantity);

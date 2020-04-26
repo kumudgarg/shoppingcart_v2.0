@@ -10,7 +10,7 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public String getName() {
+    public String getName(){
         return product.getName();
     }
 
