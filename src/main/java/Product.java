@@ -1,30 +1,39 @@
 public class Product {
 
-    private ProductType productType;
+    private String name;
+    private double price;
+    private BuyXGetYOffer offer;
 
-    private  double productPrice;
-
-    private Offer offer;
-
-    public Product(ProductType productType, double productPrice) {
-        this.productType = productType;
-        this.productPrice = productPrice;
+    public Product(String name, double price, BuyXGetYOffer buyXGetYOffer) {
+        this.name = name;
+        this.price = price;
+        this.offer = buyXGetYOffer;
     }
 
-    public Offer getOffer() {
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+        this.offer = null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public BuyXGetYOffer getOffer() {
         return offer;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
-    }
-
-    public ProductType getProductType() {
-        return productType;
-    }
-
-    public double getProductPrice() {
-        return productPrice ;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
     }
 
 }

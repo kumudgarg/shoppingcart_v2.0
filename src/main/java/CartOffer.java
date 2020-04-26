@@ -2,23 +2,21 @@ import java.util.List;
 
 public class CartOffer {
 
-    private static double discountRate;
+    private double discountRate;
 
-    private static int leastLimitProduct;
+    private int leastBuyPrice;
 
-    public static void setDiscountRateAndleastLimitProduct(double rate,int limit){
-        discountRate = rate;
-        leastLimitProduct = limit;
+    public CartOffer(double discountRate, int leastBuyPrice) {
+        this.discountRate = discountRate;
+        this.leastBuyPrice = leastBuyPrice;
     }
 
-    public static double getDiscountByCartOffer(List<Product> products,double totalPrice) {
-        if(products.size() > leastLimitProduct) {
-            double totalOffPrice = (totalPrice * discountRate) / 100;
-            return totalOffPrice;
-        }
-        return 0.0;
+    public double getDiscountRate() {
+        return discountRate;
     }
 
-
+    public int getLeastBuyPrice() {
+        return leastBuyPrice;
+    }
 
 }
