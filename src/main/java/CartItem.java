@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 public class CartItem {
 
     private Product product;
@@ -32,11 +34,4 @@ public class CartItem {
         return discount;
     }
 
-    @Override
-    public String toString() {
-        return "CartItem{" +
-                "product=" + product +
-                ", quantity=" + quantity +
-                '}';
-    }
 }

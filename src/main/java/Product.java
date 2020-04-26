@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 public class Product {
 
     private String name;
@@ -26,14 +28,6 @@ public class Product {
 
     public BuyXGetYOffer getOffer() {
         return offer;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                '}';
     }
 
 }

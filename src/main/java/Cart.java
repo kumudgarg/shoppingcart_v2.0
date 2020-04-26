@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class Cart {
     }
 
     public double getDiscountByCartOffer() {
-        if(getItemsTotal() > cartOffer.getLeastBuyPrice()) {
+        if(cartOffer != null && getItemsTotal() > cartOffer.getLeastBuyPrice()) {
             return  (getItemsTotal() * cartOffer.getDiscountRate()) / 100;
         }
         return 0.0;
@@ -55,9 +57,8 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" +
-                "cartItems=" + cartItems +
-                '}';
+        Gson gson = new Gson();
+        return gson.toJson(cartItems);
     }
 }
 
