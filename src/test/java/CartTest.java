@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 public class CartTest {
 
     @Test
-    public void shouldHaveContentAndTotalWhenSingleProductIsAdded() throws NullProductTypeException {
+    public void shouldHaveContentAndTotalWhenSingleProductIsAdded() throws NullProductTypeException, NullProductNameException {
         Cart cart = new Cart();
         Product apple = new Product("apple", 0.99);
         cart.addProduct(apple, 5);
@@ -22,7 +22,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded() throws NullProductTypeException {
+    public void shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded() throws NullProductTypeException, NullProductNameException {
         Cart cart = new Cart();
         Product apple = new Product("apple", 0.99);
         cart.addProduct(apple, 2);
@@ -36,7 +36,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() throws NullProductTypeException {
+    public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() throws NullProductTypeException, NullProductNameException {
         Cart cart = new Cart();
         Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
         Product mask = new Product("Mask", 1.99);
@@ -49,7 +49,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded() throws NullProductTypeException {
+    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded() throws NullProductTypeException, NullProductNameException {
         Cart cart = new Cart(new CartOffer(10,10));
         Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
         Product mask = new Product("Mask", 1.99);
@@ -63,9 +63,16 @@ public class CartTest {
     }
 
     @Test(expected = NullProductTypeException.class)
-    public void shouldThrowCustomExceptionWhenANullProductEntered() throws NullProductTypeException {
+    public void shouldThrowCustomExceptionWhenANullProductEntered() throws NullProductTypeException, NullProductNameException {
         Cart cart = new Cart();
         cart.addProduct(null, 1);
+    }
+
+    @Test(expected = NullProductNameException.class)
+    public void shouldThrowCustomExceptionWhenANullProductNameEntered() throws NullProductTypeException, NullProductNameException {
+        Cart cart = new Cart();
+        Product product = new Product(null, 2);
+        cart.addProduct(product, 1);
     }
 
 

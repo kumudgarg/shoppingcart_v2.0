@@ -18,7 +18,10 @@ public class Product {
         this.offer = null;
     }
 
-    public String getName(){
+    public String getName() throws NullProductNameException {
+        if(name == null){
+            throw new NullProductNameException("product name should not be null");
+        }
         return name;
     }
 

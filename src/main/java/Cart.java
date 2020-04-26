@@ -16,7 +16,7 @@ public class Cart {
         this.cartOffer = cartOffer;
     }
 
-    public void addProduct(Product product, int quantity) throws NullProductTypeException {
+    public void addProduct(Product product, int quantity) throws NullProductTypeException, NullProductNameException {
         if(product == null){
             throw new NullProductTypeException("product should not be null");
         }
@@ -30,7 +30,14 @@ public class Cart {
     }
 
     private CartItem findCartItem(String name) {
-        return cartItems.stream().filter(cartItem -> cartItem.getName() == name).findFirst().orElse(null);
+        return cartItems.stream().filter(cartItem -> {
+            try {
+                return cartItem.getName() == name;
+            } catch (NullProductNameException e) {
+                e.getMessage();
+                return false;
+            }
+        }).findFirst().orElseThrow(null);
     }
 
     private double getItemsTotal() {
