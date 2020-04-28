@@ -1,16 +1,16 @@
-import com.google.gson.Gson;
-
 public class CartItem {
 
     private Product product;
+
     private int quantity;
 
     public CartItem(Product product, int quantity) {
+
         this.product = product;
         this.quantity = quantity;
     }
 
-    public String getName() throws NullProductNameException {
+    public String getName() {
         return product.getName();
     }
 
@@ -19,19 +19,16 @@ public class CartItem {
     }
 
     public double getPrice() {
-        return (product.getPrice() * quantity) - getDiscount();
+        return product.getPrice() * quantity;
     }
 
     public double getDiscount() {
         double discount = 0;
         if (product.getOffer() != null) {
-            int buyQuantity = product.getOffer().getBuyQuantity();
-            int freeQuantity = product.getOffer().getFreeQuantity();
-
-            int freeItems = (quantity / (buyQuantity + freeQuantity)) * freeQuantity;
-            discount = freeItems * product.getPrice();
+            discount = product.getOffer().getDiscount(product, quantity);
         }
         return discount;
+
     }
 
 }

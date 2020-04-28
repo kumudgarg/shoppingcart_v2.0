@@ -1,5 +1,3 @@
-import com.google.gson.Gson;
-
 public class Product {
 
     private String name;
@@ -18,10 +16,7 @@ public class Product {
         this.offer = null;
     }
 
-    public String getName() throws NullProductNameException {
-        if(name == null){
-            throw new NullProductNameException("product name should not be null");
-        }
+    public String getName() {
         return name;
     }
 

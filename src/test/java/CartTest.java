@@ -1,11 +1,10 @@
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
 public class CartTest {
 
     @Test
-    public void shouldHaveContentAndTotalWhenSingleProductIsAdded() throws NullProductTypeException, NullProductNameException {
+    public void shouldHaveContentAndTotalWhenSingleProductIsAdded() {
         Cart cart = new Cart();
         Product apple = new Product("apple", 0.99);
         cart.addProduct(apple, 5);
@@ -22,7 +21,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded() throws NullProductTypeException, NullProductNameException {
+    public void shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded() {
         Cart cart = new Cart();
         Product apple = new Product("apple", 0.99);
         cart.addProduct(apple, 2);
@@ -36,45 +35,57 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() throws NullProductTypeException, NullProductNameException {
+    public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() {
         Cart cart = new Cart();
         Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
         Product mask = new Product("Mask", 1.99);
         cart.addProduct(apple, 5);
         cart.addProduct(mask, 3);
+        double total = cart.getTotal();
         assertEquals(0.2, cart.getSalesTax(), 0.01);
-        assertEquals(0.99, cart.getDiscount(), 0.01);
-        assertEquals(10.13, cart.getTotal(), 0.01);
+        assertEquals(0.99, cart.getTotalDiscount(), 0.01);
+        assertEquals(10.13, total, 0.01);
         assertEquals("[{\"product\":{\"name\":\"Apple\",\"price\":0.99,\"offer\":{\"buyQuantity\":2,\"freeQuantity\":1}},\"quantity\":5},{\"product\":{\"name\":\"Mask\",\"price\":1.99},\"quantity\":3}]",cart.toString());
     }
 
     @Test
-    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded() throws NullProductTypeException, NullProductNameException {
+    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded() {
         Cart cart = new Cart(new CartOffer(10,10));
         Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
         Product mask = new Product("Mask", 1.99);
         cart.addProduct(apple, 10);
         cart.addProduct(mask, 3);
-        assertEquals(0.26, cart.getSalesTax(), 0.01);
-        assertEquals(4.26, cart.getDiscount(), 0.01);
-        assertEquals(1.29, cart.getDiscountByCartOffer(),0.01);
-        assertEquals(11.87, cart.getTotal(), 0.01);
+        double total = cart.getTotal();
+        assertEquals(0.23, cart.getSalesTax(), 0.01);
+        assertEquals(4.26, cart.getTotalDiscount(), 0.01);
+        assertEquals(11.84, total, 0.01);
         assertEquals("[{\"product\":{\"name\":\"Apple\",\"price\":0.99,\"offer\":{\"buyQuantity\":2,\"freeQuantity\":1}},\"quantity\":10},{\"product\":{\"name\":\"Mask\",\"price\":1.99},\"quantity\":3}]", cart.toString());
     }
 
-    @Test(expected = NullProductTypeException.class)
-    public void shouldThrowCustomExceptionWhenANullProductEntered() throws NullProductTypeException, NullProductNameException {
-        Cart cart = new Cart();
-        cart.addProduct(null, 1);
+    @Test
+    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAddedOneByOne(){
+        Cart cart = new Cart(new CartOffer(10,10));
+        Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
+        Product mask = new Product("Mask", 1.99);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(apple, 1);
+        cart.addProduct(mask, 1);
+        cart.addProduct(mask, 1);
+        cart.addProduct(mask, 1);
+        double total = cart.getTotal();
+        assertEquals(0.23, cart.getSalesTax(), 0.01);
+        assertEquals(4.26, cart.getTotalDiscount(), 0.01);
+        assertEquals(11.84, cart.getTotal(), 0.01);
+        assertEquals("[{\"product\":{\"name\":\"Apple\",\"price\":0.99,\"offer\":{\"buyQuantity\":2,\"freeQuantity\":1}},\"quantity\":10},{\"product\":{\"name\":\"Mask\",\"price\":1.99},\"quantity\":3}]", cart.toString());
     }
-
-    @Test(expected = NullProductNameException.class)
-    public void shouldThrowCustomExceptionWhenANullProductNameEntered() throws NullProductTypeException, NullProductNameException {
-        Cart cart = new Cart();
-        Product product = new Product(null, 2);
-        cart.addProduct(product, 1);
-    }
-
 
 }
 

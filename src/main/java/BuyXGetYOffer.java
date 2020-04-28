@@ -4,15 +4,12 @@ public class BuyXGetYOffer {
     private int freeQuantity;
 
     public BuyXGetYOffer(int x, int freeQuantity) {
-        buyQuantity = x;
+        this.buyQuantity = x;
         this.freeQuantity = freeQuantity;
     }
 
-    public int getBuyQuantity() {
-        return buyQuantity;
-    }
-
-    public int getFreeQuantity() {
-        return freeQuantity;
-    }
+    public double getDiscount(Product product, int quantity){
+        int freeItems = (quantity / (buyQuantity + freeQuantity)) * freeQuantity;
+           return freeItems * product.getPrice();
+        }
 }

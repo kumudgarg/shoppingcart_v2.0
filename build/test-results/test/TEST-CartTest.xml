@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CartTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-04-26T15:01:38" hostname="kumuds-MacBook-Pro.local" time="0.119">
+<testsuite name="CartTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2020-04-28T07:20:47" hostname="kumuds-MacBook-Pro.local" time="0.11">
   <properties/>
-  <testcase name="shouldThrowCustomExceptionWhenANullProductNameEntered" classname="CartTest" time="0.004"/>
-  <testcase name="shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded" classname="CartTest" time="0.105"/>
+  <testcase name="shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded" classname="CartTest" time="0.091"/>
+  <testcase name="shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAddedOneByOne" classname="CartTest" time="0.007"/>
   <testcase name="shouldReturnZeroCartSizeWhenAListOfProductEmpty" classname="CartTest" time="0.001"/>
-  <testcase name="shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded" classname="CartTest" time="0.002"/>
-  <testcase name="shouldThrowCustomExceptionWhenANullProductEntered" classname="CartTest" time="0.001"/>
+  <testcase name="shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded" classname="CartTest" time="0.005"/>
   <testcase name="shouldHaveContentAndTotalWhenSingleProductIsAdded" classname="CartTest" time="0.002"/>
-  <testcase name="shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded" classname="CartTest" time="0.003"/>
+  <testcase name="shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded" classname="CartTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

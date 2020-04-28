@@ -1,5 +1,4 @@
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,17 +8,19 @@ public class Cart {
 
     private CartOffer cartOffer;
 
+    private double discount;
+
+    private double totalPrice;
+
     public Cart() {
+        this.cartOffer = null;
     }
 
     public Cart(CartOffer cartOffer) {
         this.cartOffer = cartOffer;
     }
 
-    public void addProduct(Product product, int quantity) throws NullProductTypeException, NullProductNameException {
-        if(product == null){
-            throw new NullProductTypeException("product should not be null");
-        }
+    public void addProduct(Product product, int quantity) {
         CartItem existingCartItem = findCartItem(product.getName());
         if (existingCartItem != null) {
             existingCartItem.increaseQuantity(quantity);
@@ -27,42 +28,42 @@ public class Cart {
             CartItem newCartItem = new CartItem(product, quantity);
             cartItems.add(newCartItem);
         }
+
     }
 
     private CartItem findCartItem(String name) {
-        return cartItems.stream().filter(cartItem -> {
-            try {
-                return cartItem.getName() == name;
-            } catch (NullProductNameException e) {
-                e.getMessage();
-                return false;
-            }
-        }).findFirst().orElseThrow(null);
+        return cartItems.stream().filter(cartItem -> cartItem.getName() == name).findFirst().orElse(null);
     }
 
     private double getItemsTotal() {
-        return cartItems.stream().mapToDouble(CartItem::getPrice).sum();
+        totalPrice = cartItems.stream().mapToDouble(cartItems -> cartItems.getPrice()).sum();
+        return totalPrice;
+    }
+
+    private double getDiscountByCartOffer() {
+        if (cartOffer != null && getItemsTotal() > cartOffer.getLeastBuyPrice()) {
+            return ((totalPrice - discount) * cartOffer.getDiscountRate()) / 100;
+        }
+        return 0.0;
+    }
+
+    private double getDiscountByProductOffer() {
+        discount = cartItems.stream().mapToDouble(CartItem::getDiscount).sum();
+        return discount;
     }
 
     public double getSalesTax() {
-        return MoneyUtility.getSalesTax(getItemsTotal());
+        return MoneyUtility.getSalesTax(totalPrice - discount);
     }
 
     public double getTotal() {
-        double totalPrice = getItemsTotal() + getSalesTax() - getDiscountByCartOffer();
-        return MoneyUtility.format(totalPrice);
+        double grandTotal = getItemsTotal() - getTotalDiscount() + getSalesTax();
+        return MoneyUtility.format(grandTotal);
     }
 
-    public double getDiscount() {
-        double discount = cartItems.stream().mapToDouble(CartItem::getDiscount).sum() + getDiscountByCartOffer();
+    public double getTotalDiscount() {
+        discount = getDiscountByProductOffer() + getDiscountByCartOffer();
         return MoneyUtility.format(discount);
-    }
-
-    public double getDiscountByCartOffer() {
-        if(cartOffer != null && getItemsTotal() > cartOffer.getLeastBuyPrice()) {
-            return  (getItemsTotal() * cartOffer.getDiscountRate()) / 100;
-        }
-        return 0.0;
     }
 
     @Override
