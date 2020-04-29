@@ -22,18 +22,22 @@ public class Cart {
         this.cartOffer = cartOffer;
     }
 
-    public void addProduct(Product product, int quantity) {
-        CartItem existingCartItem = findCartItem(product.getName());
-        if (existingCartItem != null) {
-            existingCartItem.increaseQuantity(quantity);
-        } else {
-            CartItem newCartItem = new CartItem(product, quantity);
-            cartItems.add(newCartItem);
-        }
-        updateActualTotal();
-        updateDiscountByProductOffer();
-        updateDiscountByCartOffer();
-        updateSalesTax();
+    public void addProduct(Product product, int quantity) throws NullProductOrNullProductNameTypeException {
+       try {
+           CartItem existingCartItem = findCartItem(product.getName());
+           if (existingCartItem != null) {
+               existingCartItem.increaseQuantity(quantity);
+           } else {
+               CartItem newCartItem = new CartItem(product, quantity);
+               cartItems.add(newCartItem);
+           }
+           updateActualTotal();
+           updateDiscountByProductOffer();
+           updateDiscountByCartOffer();
+           updateSalesTax();
+       }catch (NullPointerException ex){
+           throw  new NullProductOrNullProductNameTypeException("either product is null or product name");
+       }
 
     }
 
@@ -54,7 +58,7 @@ public class Cart {
 
     private double updateDiscountByCartOffer() {
         if(cartOffer != null)
-         discount += cartOffer.getDiscountByCartOffer(totalPrice, discount);
+            discount += cartOffer.getDiscountByCartOffer(totalPrice, discount);
         return discount;
     }
 

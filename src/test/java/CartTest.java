@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 public class CartTest {
 
     @Test
-    public void shouldHaveContentAndTotalWhenSingleProductIsAdded() {
+    public void shouldHaveContentAndTotalWhenSingleProductIsAdded() throws NullProductOrNullProductNameTypeException {
         Cart cart = new Cart();
         Product apple = new Product("apple", 0.99);
         cart.addProduct(apple, 5);
@@ -19,7 +19,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded() {
+    public void shouldReturnTotalPriceAndSalesTaxWhenMultipleProductAdded() throws NullProductOrNullProductNameTypeException {
         Cart cart = new Cart();
         Product apple = new Product("apple", 0.99);
         cart.addProduct(apple, 2);
@@ -32,7 +32,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() {
+    public void shouldReturnTotalPriceToSupportOfferWhenMultipleProductAdded() throws NullProductOrNullProductNameTypeException {
         Cart cart = new Cart();
         Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
         Product mask = new Product("Mask", 1.99);
@@ -45,7 +45,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded() {
+    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAdded() throws NullProductOrNullProductNameTypeException {
         Cart cart = new Cart(new CartOffer(10,10));
         Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
         Product mask = new Product("Mask", 1.99);
@@ -58,7 +58,7 @@ public class CartTest {
     }
 
     @Test
-    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAddedOneByOne(){
+    public void shouldReturnTotalPriceToSupportCartOfferWhenMultipleProductAddedOneByOne() throws NullProductOrNullProductNameTypeException {
         Cart cart = new Cart(new CartOffer(10,10));
         Product apple = new Product("Apple", 0.99, new BuyXGetYOffer(2, 1));
         Product mask = new Product("Mask", 1.99);
@@ -79,6 +79,12 @@ public class CartTest {
         assertEquals(4.26, cart.getTotalDiscount(), 0.01);
         assertEquals(11.84, cart.getTotal(), 0.01);
         assertEquals("[{\"product\":{\"name\":\"Apple\",\"price\":0.99,\"offer\":{\"buyQuantity\":2,\"freeQuantity\":1}},\"quantity\":10},{\"product\":{\"name\":\"Mask\",\"price\":1.99},\"quantity\":3}]", cart.toString());
+    }
+
+    @Test(expected = NullProductOrNullProductNameTypeException.class)
+    public void shouldThrowCustomExceptionWhenNullProductEntered() throws NullProductOrNullProductNameTypeException {
+        Cart cart = new Cart();
+        cart.addProduct(null, 2);
     }
 
 }
