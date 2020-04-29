@@ -12,6 +12,8 @@ public class Cart {
 
     private double totalPrice;
 
+    private double salesTax;
+
     public Cart() {
         this.cartOffer = null;
     }
@@ -28,6 +30,10 @@ public class Cart {
             CartItem newCartItem = new CartItem(product, quantity);
             cartItems.add(newCartItem);
         }
+        updateActualTotal();
+        updateDiscountByProductOffer();
+        updateDiscountByCartOffer();
+        updateSalesTax();
 
     }
 
@@ -35,33 +41,39 @@ public class Cart {
         return cartItems.stream().filter(cartItem -> cartItem.getName() == name).findFirst().orElse(null);
     }
 
-    private double getItemsTotal() {
+    private double updateActualTotal() {
         totalPrice = cartItems.stream().mapToDouble(cartItems -> cartItems.getPrice()).sum();
         return totalPrice;
     }
 
 
-    private double getDiscountByProductOffer() {
+    private double updateDiscountByProductOffer() {
         discount = cartItems.stream().mapToDouble(CartItem::getDiscount).sum();
         return discount;
     }
 
-    public double getSalesTax() {
-        return MoneyUtility.getSalesTax(totalPrice - discount);
+    private double updateDiscountByCartOffer() {
+        if(cartOffer != null)
+         discount += cartOffer.getDiscountByCartOffer(totalPrice, discount);
+        return discount;
+    }
+
+    private double updateSalesTax() {
+        salesTax =  MoneyUtility.getSalesTax(totalPrice - discount);
+        return salesTax;
+    }
+
+    public double getSalesTax(){
+        return salesTax;
     }
 
     public double getTotal() {
-        double grandTotal = getItemsTotal() - getTotalDiscount() + getSalesTax();
+        double grandTotal = totalPrice - discount + salesTax;
         return MoneyUtility.format(grandTotal);
     }
 
     public double getTotalDiscount() {
-        double cartDiscount = 0.0;
-        discount = getDiscountByProductOffer();
-        if(cartOffer !=  null)
-          cartDiscount = cartOffer.getDiscountByCartOffer(totalPrice, discount);
-        discount += cartDiscount;
-        return MoneyUtility.format(discount);
+        return discount;
     }
 
     @Override
