@@ -40,12 +40,6 @@ public class Cart {
         return totalPrice;
     }
 
-    private double getDiscountByCartOffer() {
-        if (cartOffer != null && getItemsTotal() > cartOffer.getLeastBuyPrice()) {
-            return ((totalPrice - discount) * cartOffer.getDiscountRate()) / 100;
-        }
-        return 0.0;
-    }
 
     private double getDiscountByProductOffer() {
         discount = cartItems.stream().mapToDouble(CartItem::getDiscount).sum();
@@ -62,7 +56,11 @@ public class Cart {
     }
 
     public double getTotalDiscount() {
-        discount = getDiscountByProductOffer() + getDiscountByCartOffer();
+        double cartDiscount = 0.0;
+        discount = getDiscountByProductOffer();
+        if(cartOffer !=  null)
+          cartDiscount = cartOffer.getDiscountByCartOffer(totalPrice, discount);
+        discount += cartDiscount;
         return MoneyUtility.format(discount);
     }
 

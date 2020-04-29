@@ -4,17 +4,18 @@ public class CartOffer {
 
     private int leastBuyPrice;
 
+    private double cartDiscount = 0.0;
+
     public CartOffer(double discountRate, int leastBuyPrice) {
         this.discountRate = discountRate;
         this.leastBuyPrice = leastBuyPrice;
     }
 
-    public double getDiscountRate() {
-        return discountRate;
-    }
-
-    public int getLeastBuyPrice() {
-        return leastBuyPrice;
+    public double getDiscountByCartOffer(double totalPrice, double discount) {
+        if (totalPrice > leastBuyPrice) {
+            cartDiscount = ((totalPrice - discount) * discountRate) / 100;
+        }
+        return cartDiscount;
     }
 
 }
