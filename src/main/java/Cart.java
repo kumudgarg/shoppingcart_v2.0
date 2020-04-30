@@ -14,6 +14,8 @@ public class Cart {
 
     private double salesTax;
 
+    private double grandTotal;
+
     public Cart() {
         this.cartOffer = null;
     }
@@ -34,6 +36,7 @@ public class Cart {
         updateDiscountByProductOffer();
         updateDiscountByCartOffer();
         updateSalesTax();
+        updateGrandTotal();
 
     }
 
@@ -63,13 +66,17 @@ public class Cart {
         return salesTax;
     }
 
+    private double updateGrandTotal(){
+        grandTotal = totalPrice - discount + salesTax;
+        return MoneyUtility.format(grandTotal);
+    }
+
     public double getSalesTax(){
         return salesTax;
     }
 
     public double getTotal() {
-        double grandTotal = totalPrice - discount + salesTax;
-        return MoneyUtility.format(grandTotal);
+        return grandTotal;
     }
 
     public double getTotalDiscount() {
