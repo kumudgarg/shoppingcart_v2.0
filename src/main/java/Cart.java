@@ -6,7 +6,7 @@ public class Cart {
 
     private List<CartItem> cartItems = new ArrayList<>();
 
-    private CartOffer cartOffer;
+    private CartOffer cartOffer = null;
 
     private double discount;
 
@@ -17,7 +17,6 @@ public class Cart {
     private double grandTotal;
 
     public Cart() {
-        this.cartOffer = null;
     }
 
     public Cart(CartOffer cartOffer) {
